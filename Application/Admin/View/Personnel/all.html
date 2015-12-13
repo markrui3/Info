@@ -1,0 +1,355 @@
+<include file='Index/header' />
+<div class="row">
+	<br>
+	<div class="col-sm-12" >
+    	<button type="button" data-toggle="modal" class="btn btn-primary" onclick="edit()">添加人员</button>
+    	<br><br>
+  </div>
+
+  <div class="col-sm-12">
+  	<br/>
+		<div class="col-sm-1" style="padding-top:5px;">
+			<label for="pname" class="control-label">姓名：</label>
+		</div>
+		<div class="col-sm-2">
+			<input id="pname" name="pname" class="form-control"></input>
+		</div>
+		<div class="col-sm-1"></div>
+		<div class="col-sm-1" style="padding-top:5px;">
+			<label for="age" class="control-label">年龄：</label>
+		</div>
+		<div class="col-sm-1">
+			<input id="small_age" name="small_age" class="form-control"></input>
+		</div>
+		<div class="col-sm-1" style="padding-top:5px;width:10px">至</div>
+		<div class="col-sm-1">
+			<input id="big_age" name="big_age" class="form-control"></input>
+		</div>
+		<div class="col-sm-1"></div>
+		<div class="col-sm-1" style="padding-top:5px">
+			<label for="gender_search" class="control-label">性别：</label>
+		</div>
+		<div class="col-sm-2">
+      <select class="form-control" id="gender_search" name="gender_search">
+				<option value="男">男</option>
+				<option value="女">女</option>
+			</select>
+    </div>
+  </div>
+
+  <div class="col-sm-12">
+  	<br/>
+		<div class="col-sm-1" style="padding-top:5px;">
+			<label for="duty" class="control-label">职务：</label>
+		</div>
+		<div class="col-sm-2">
+			<input id="duty" name="duty" class="form-control"></input>
+		</div>
+		<div class="col-sm-2"></div>
+		<div class="col-sm-2" style="padding-top:5px;padding-left:50px;">
+			<label for="work_time" class="control-label">参加工作时间：</label>
+		</div>
+		<div class="col-sm-2">
+			<input id="small_work_time" name="small_work_time" class="form-control"></input>
+		</div>
+		<div class="col-sm-1" style="padding-top:5px;width:10px">至</div>
+		<div class="col-sm-2">
+			<input id="big_work_time" name="big_work_time" class="form-control"></input>
+		</div>
+  </div>
+
+  <div class="col-sm-12">
+  	<br/>
+  	<div class="col-sm-1" style="padding-top:5px;">
+			<label for="renzhi_time" class="control-label">任职时间：</label>
+		</div>
+		<div class="col-sm-2">
+			<input id="small_renzhi_time" name="small_renzhi_time" class="form-control"></input>
+		</div>
+		<div class="col-sm-1" style="padding-top:5px;width:10px">至</div>
+		<div class="col-sm-2">
+			<input id="big_renzhi_time" name="big_renzhi_time" class="form-control"></input>
+		</div>
+		<div class="col-sm-1" style="padding-top:5px;width:146px">
+			<label for="party_time" class="control-label">入党时间：</label>
+		</div>
+		<div class="col-sm-2">
+			<input id="small_party_time" name="small_party_time" class="form-control"></input>
+		</div>
+		<div class="col-sm-1" style="padding-top:5px;width:10px">至</div>
+		<div class="col-sm-2">
+			<input id="big_party_time" name="big_party_time" class="form-control"></input>
+		</div>
+  </div>
+
+	<div class="col-sm-12">
+		<br>
+		<table id="personnel_list_table" class="table table-hover table-bordered table-striped table-striped">
+			<thead>
+				<tr>
+					<volist name="thead" id="th">
+            <td>{$th.zh_name}</td>
+          </volist>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div id="personnel_modal" class="modal fade">
+  <div class="modal-dialog" >
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title">人员</h4>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+              <form id="personnel_form" action='{:U("Admin/Personnel/save/")}' method="post">
+              <div class="form-group">
+              	<volist name="list" id="vo">
+                  <div class="col-sm-12">
+                  	<br/>
+											<div class="col-sm-2"></div>
+                      <div class="col-sm-3" style="padding-top:5px">
+                          <label for="{$vo.en_name}" class="control-label">{$vo.zh_name}：</label>
+                      </div>
+                      <div class="col-sm-5">
+                          <input id="{$vo.en_name}" name="{$vo.en_name}" class="form-control" />
+                      </div>
+                      <div class="col-sm-2"></div>
+                  </div>
+                 </volist>
+              </div>
+              </form>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button class="btn btn-primary" onclick="save()">确认</button>
+              <button class="btn btn-defalt" data-dismiss="modal">关闭</button>
+          </div>
+      </div>
+  </div>
+</div>
+<br>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">请选择人员属性</h3>
+	</div>
+	<div class="panel-body">
+		<form id="export_form" action='{:U("Admin/Personnel/exportexcel/")}'>
+			<div class="col-sm-12">
+				<volist name="list" id="vo">
+		      <div class="col-sm-3" style="padding-top:5px">
+		      	<label class="checkbox">
+				      <input name="property[]" type="checkbox" value="{$vo.en_name}" checked="checked"> {$vo.zh_name}
+				    </label>
+		      </div>
+		    </volist>
+	    </div>
+		</form>
+		<button class="btn btn-primary" onclick="exportExcel()">导出Excel</button>
+	</div>
+</div>
+
+<include file='Index/footer' />
+<script>
+$(document).ready(function() {
+	loadDatetimepicker('small_work_time');
+	loadDatetimepicker('big_work_time');
+	loadDatetimepicker('small_renzhi_time');
+	loadDatetimepicker('big_renzhi_time');
+	loadDatetimepicker('small_party_time');
+	loadDatetimepicker('big_party_time');
+	loadTable();		
+});
+
+var table;
+function loadTable(){
+	var data = '{$data}';
+	data = eval(data);
+	var columns = '{$columns}';
+	columns = eval(columns);
+	table = $('#personnel_list_table').DataTable({
+		"bProcessing": true,
+		"bDestroy": true,
+		"sPaginationType" : "full_numbers",
+		"oLanguage" : {
+              "sLengthMenu": "每页显示 _MENU_ 条记录",
+              "sZeroRecords": "抱歉， 没有找到",
+              "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+              "sInfoEmpty": "没有数据",
+              "sInfoFiltered": "(从 _MAX_ 条数据中检索)",
+              "sZeroRecords": "没有检索到数据",
+               "sSearch": "搜索: &nbsp",
+              "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "前一页",
+                "sNext": "后一页",
+                "sLast": "尾页"
+              }
+          }, 
+		"data" : data,
+		"columns": columns,
+    "columnDefs": [
+    	{
+	    	"targets": 0,
+	    	"visible": false
+	    },
+	    {
+	    	"targets": -1,
+	    	"data": null,
+	    	"render": function (data, type, row, table) {
+	        return '<button class="btn btn-info" onclick="edit(\''+row.id+'\')">编辑</button> <button class="btn btn-warning" onclick="del(\''+row.id+'\')">删除</button>';
+	      },
+	    }
+    ]
+	});
+	
+	$("#pname").keyup(function(){
+		table.column(1).search(this.value).draw();
+  });
+
+  $.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = parseInt( $('#small_age').val(), 10 );
+        var max = parseInt( $('#big_age').val(), 10 );
+        var now = parseFloat( data[3] ) || 0; // use data for the age column
+
+        if ( ( isNaN( min ) && isNaN( max ) ) ||
+             ( isNaN( min ) && now <= max ) ||
+             ( min <= now   && isNaN( max ) ) ||
+             ( min <= now   && now <= max ) )
+        {
+            return true;
+        }
+        return false;
+    }
+	);
+	$('#small_age, #big_age').keyup(function(e){
+      table.draw();
+  });
+
+  $("#gender_search").on( 'change', function () {
+ 		table.column(2).search(this.value).draw();
+  });
+
+  $("#duty").keyup(function(){
+		table.column(5).search(this.value).draw();
+  });
+
+  utils('small_work_time', 'big_work_time', 7);
+	$('#small_work_time, #big_work_time').datetimepicker().on('changeDate', function(e){
+      table.draw();
+  });
+
+  utils('small_renzhi_time', 'big_renzhi_time', 6);
+	$('#small_renzhi_time, #big_renzhi_time').datetimepicker().on('changeDate', function(e){
+      table.draw();
+  });
+
+  utils('small_party_time', 'big_party_time', 8);
+	$('#small_party_time, #big_party_time').datetimepicker().on('changeDate', function(e){
+      table.draw();
+  });
+}
+
+var save_id = '';
+function edit(id){
+	if(id){
+		save_id = id;
+		$.ajax({
+			url: '{:U("Admin/Personnel/get/")}',
+			type: 'post',
+			dataType: 'json',
+			data:{
+				"id":id
+			}
+		})
+		.success(function(data){
+			for (var key in data) {
+				$('#'+key).attr('value', data[key]);
+			}
+		});
+	}
+	
+	$('#personnel_modal').modal({
+		backdrop : "static"
+	});
+}
+
+function del(id){
+	if(!confirm("是否确认删除？")){
+		return;
+	}
+	$.ajax({
+			url: '{:U("Admin/Personnel/del/")}',
+			type: 'post',
+			dataType: 'json',
+			data:{
+				"id":id
+			}
+		})
+		.success(function(data){
+			location.reload();
+	});
+}
+
+function save(){
+  $('#personnel_form').ajaxSubmit({    
+      data:{
+          id : save_id
+      },
+      success:function(data){
+          $('#personnel_modal').modal('hide');
+          location.reload();
+      }
+  });
+}
+
+function utils(small, big, index){
+	$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = new Date($('#'+small).val());
+        var max = new Date($('#'+big).val());
+        var now = new Date( data[index] ); 
+
+        if ( ( isNaN( min ) && isNaN( max ) ) ||
+             ( isNaN( min ) && now <= max ) ||
+             ( min <= now   && isNaN( max ) ) ||
+             ( min <= now   && now <= max ) )
+        {
+            return true;
+        }
+        return false;
+    }
+	);	
+}
+
+function exportExcel(){
+	var ids = [];
+	var data = table.rows({search:'applied'}).data();
+	for(var i=0; i<data.length; i++){
+		ids.push(data[i].id);
+	}
+	$('#export_form').ajaxSubmit({    
+		data:{
+        ids : ids
+    },
+    success:function(data){
+    	alert("导出成功！");
+      //location.reload();
+    }
+  });
+}
+
+$('#personnel_modal').on("hidden.bs.modal",function(e){
+	save_id = '';
+  $('#personnel_modal :input').each(function(e){
+  	$(this).attr('value', '');
+  });
+}); 
+</script>
